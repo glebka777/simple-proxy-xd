@@ -1,18 +1,18 @@
 const socks = require("@heroku/socksv5");
+const socketIO = require("socket.io");
 
 const port = process.env.PORT || 1080;
 const users = JSON.parse(process.env.USERS) || {};
 
 
-const srv = socks.createServer(function(info, accept, deny) {
+const server = socks.createServer(function(info, accept, deny) {
   accept();
 }).on('error', (err) => {
   console.log('Got error: ' + err);
 }).on('connection', (connection) => {
   console.log('Connection: ' + connection.srcAddr + ':' + connection.srcPort + ' => ' + connection.dstAddr + ':' + connection.dstPort);
 });
-
-srv.useAuth(socks.auth.UserPassword(function(user, password, cb) {
+server.useAuth(socks.auth.UserPassword(function(user, password, cb) {
   let foundPassword = users[user];
   let matched = (password === foundPassword);
   if (matched)
@@ -21,7 +21,12 @@ srv.useAuth(socks.auth.UserPassword(function(user, password, cb) {
     console.log('Failed login attempt. User: ' + user);
   cb(matched);
 }));
-
-srv.listen(port, function() {
+server.listen(port, function() {
   console.log('SOCKS server listening on port ' + port);
+});
+
+const io = socketIO(server);
+io.on('connection', (socket) => {
+  console.log('Client connected via socket');
+  socket.on('disconnect', () => console.log('Client disconnected via socket'));
 });
