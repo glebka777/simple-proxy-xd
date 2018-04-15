@@ -1,0 +1,14 @@
+{
+  "name": "simple-proxy",
+  "version": "1.0.0",
+  "description": "creating proxy test project",
+  "main": "index.js",
+  "author": "xdGuy",
+  "dependencies": {
+    "@heroku/socksv5": "0.0.9"
+  },
+  "engines": {
+    "node": "8.11.1",
+    "npm": "5.6.0"
+  }
+}
