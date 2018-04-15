@@ -25,7 +25,7 @@ server.listen(port, function() {
   console.log('SOCKS server listening on port ' + port);
 });
 
-const io = socketIO.listen(server);
+const io = socketIO(server);
 io.on('connection', (socket) => {
   console.log('Client connected via socket');
   socket.on('disconnect', () => console.log('Client disconnected via socket'));
