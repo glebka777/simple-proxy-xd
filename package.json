@@ -1,7 +1,7 @@
 {
   "name": "simple-proxy",
   "version": "1.0.0",
-  "description": "creating proxy test project",
+  "description": "testing proxy test project",
   "main": "index.js",
   "author": "xdGuy",
   "dependencies": {
